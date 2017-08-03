@@ -33,7 +33,6 @@ mqtt_client.on('connect', function() {
     console.log("MQTT connected.");
     connectedToBroker = true;
     mqtt_client.subscribe(mqttTopic);
-    setTimer();
 });
 
 mqtt_client.on('error', function(err) {
@@ -72,7 +71,6 @@ app.get('/', function(req, res){
         {
           res.send("Gelmedi:(");
         }
-        
     }
     else
     {
@@ -94,7 +92,7 @@ function clearTimer()
 
 function setTimer()
 {
-    if(genericTimer)
+    if(genericTimer != null)
     {
     	 clearTimer();
     }
