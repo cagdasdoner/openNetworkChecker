@@ -13,6 +13,7 @@ var mqttUser = 'USER';
 var mqttPass = 'PASS';
 var mqttTopic = 'TOPIC';
 var mqttAddress = 'mqtt://vestelmqtt.xyz:1883';
+var latestDisconnection = "N/A";
 
 var port = process.env.PORT || httpPort;
 var app = express();
@@ -65,11 +66,11 @@ app.get('/', function(req, res){
     {
         if(connectedToClient == true)
         {
-          res.send("Geldi:)");
+          res.send("Geldi:) <br/><br/> Son kesinti : " + latestDisconnection);
         }
         else
         {
-          res.send("Gelmedi:(");
+          res.send("Gelmedi:( <br/><br/> Son kesinti : " + latestDisconnection);
         }
     }
     else
@@ -82,6 +83,7 @@ app.get('/', function(req, res){
 function connectionDroppedCb()
 {
     connectedToClient = false;
+    latestDisconnection = new Date();
 }
 
 function clearTimer()
@@ -94,7 +96,7 @@ function setTimer()
 {
     if(genericTimer != null)
     {
-    	 clearTimer();
+       clearTimer();
     }
     genericTimer = setInterval(connectionDroppedCb, ConnectionCheckInterval);
 }
